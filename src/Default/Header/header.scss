@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto+Condensed&display=swap');
 
 #header {
     width: 100%;
@@ -9,12 +9,17 @@
     padding: 10px 0;
     display: flex;
     justify-content: space-between;
+    z-index: 7;
+    position: fixed;
+    top: 0;
+    left: 0;
 
     & .menu-logo {
         height: 100%;
         display: flex;
         justify-content: start;
         align-items: end;
+
         & img {
             margin: 0 30px;
         }
@@ -35,7 +40,7 @@
                 & .sub-menu-area {
                     height: 0;
                     background-color: white;
-                    width: 200px;
+                    width: 220px;
                     position: absolute;
                     top: 32px;
                     left: 0;
@@ -50,10 +55,10 @@
                         align-items: center;
                         // background-color: antiquewhite;
                         margin: 1px 0;
-                        height: 40px;
+                        height: 35px;
                         & img {
-                            height: 40px;
-                            width: 40px;
+                            height: 30px;
+                            width: 30px;
                             margin: 0 10px;
                         }
                     }
@@ -104,15 +109,194 @@
             }
         }
 
-        & .user {
-            display: flex;
-            align-items: center;
-            height: 40px;
-            width: 40px;
-            background-color: #999;
-            border-radius: 50%;
-            margin-right: 20px;
-            overflow: hidden;
+        & .other {
+            position: relative;
+            z-index: 1;
+
+            & .signin-signup {
+                font-family: 'Roboto Condensed', sans-serif;
+                margin: 0 10px;
+                font-weight: bold;
+                margin-top: -5px;
+                color: #999;
+
+                & button {
+                    background: 0;
+                    border: 0;
+                    font-size: 17px;
+                    border-radius: 8px;
+                    margin: 0 3px;
+                }
+            }
+
+            & .user {
+                display: flex;
+                align-items: center;
+                height: 42px;
+                width: 42px;
+                border-radius: 50%;
+                margin-right: 20px;
+                overflow: hidden;
+                z-index: 1;
+    
+
+                & .option-area {
+                    overflow: hidden;
+                    height: 0px;
+                    transition: 0.5s;
+                    background-color: white;
+                    width: 220px;
+                    position: absolute;
+                    z-index: 1;
+                    top: 52px;
+                    right: 10px;
+                    border-radius: 0 0 10px 10px;
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    border-left: 1px solid #dedede;
+                    border-right: 1px solid #dedede;
+                    border-bottom: 1px solid #dedede;
+
+                    & .logo {
+                        height: 60px;
+                        width: 60px;
+                        margin: 10px 0;
+                        overflow: hidden;
+                        border-radius: 50%;
+                        overflow: hidden;
+                    }
+
+                    & .name {
+                        font-size: 18px;
+                        font-weight: 700;
+                        line-height: 30px;
+                    }
+
+                    & .options {
+                        display: flex;
+                        justify-content: space-evenly;
+                        & .option {
+                            font-size: 15px;
+                            line-height: 17px;
+                            text-align: center;
+                            height: 35px;
+                            border-radius: 5px;
+                            background-color: white;
+                            width: 90px;
+                            font-family: 'Poppins', sans-serif;
+                            border: 1px solid #999;
+                        }
+                    }
+                }
+            }
         }
     }
+}
+
+
+#modal-sign {
+    position: fixed;
+    height: 450px;
+    width: 450px;
+    top: -50%;
+    left: 35%;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+    transition: 0.3s;
+    z-index: 2;
+    overflow: hidden;
+
+    & .icon-close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 30px;
+    }
+
+    & .wrapper-sign {
+
+        display: flex;
+        width: 900px;
+        margin-left: -450px;
+        transition: 0.5s;
+
+        & .sign-in {
+            height: 450px;
+            width: 450px;
+            padding: 40px 40px;
+            display: flex;
+            flex-direction: column;
+            & .title {
+                font-family: 'Roboto Condensed', sans-serif;
+                font-weight: bold;
+            }
+        
+            & .description {
+                text-align: start;
+                line-height: 20px;
+                margin: 5px 0;
+                font-size: 14px;
+            }
+        
+            & .form-group {
+                font-family: 'Roboto Condensed', sans-serif;
+                position: relative;
+                width: 100%;
+                margin-top: 25px;
+        
+                & label {
+                    position: absolute;
+                    font-size: 14px;
+                    background-color: white;
+                    top: -14px;
+                    left: 4px;
+                    padding: 0 5px;
+                    border-radius: 20px;
+                }
+        
+                & input {
+                    height: 42px;
+                    width: 100%;
+                    padding: 5px 13px;
+                }
+            }
+        
+            & .btn-action {
+                height: 50px;
+                width: 130px;
+                font-size: 18px;
+                font-family: 'Roboto Condensed', sans-serif;
+                color: white;
+                border: 0;
+                background-color: #c9192e;
+                margin-top: 15px;
+            }
+        
+            & .forgot {
+                text-align: start;
+                margin: 15px 0 ;
+                line-height: 20px;
+            }
+        
+            & .have {
+                text-align: start;
+                margin: 0 ;
+            }
+        }
+    }
+
+    
+
+}
+
+.opa {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #000000ad;
+    width: 100%;
+    z-index: 1;
+    display: none;
 }
