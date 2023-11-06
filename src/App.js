@@ -1,23 +1,24 @@
 
 import './App.css';
-import Header from './Default/Header';
-import HomePage from './HomePage';
-import Footer from './Default/Footer';
+import Header from './layouts/Default/Header';
+import HomePage from './layouts/HomePage';
+import Footer from './layouts/Default/Footer';
 import { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate} from 'react-router-dom';
-import Categories from './Categories';
-import ShoesDetail from './ShoesDetail';
-import EditProfilePage from './UserPage/EditProfile';
-import GeneralPage from './UserPage/General';
-import PasswordPage from './UserPage/Password';
+import Categories from './layouts/Categories';
+import ShoesDetail from './layouts/ShoesDetail';
+import EditProfilePage from './layouts/UserPage/EditProfile';
+import GeneralPage from './layouts/UserPage/General';
+import PasswordPage from './layouts/UserPage/Password';
 import axios from 'axios';
-import { Context } from './UseContext/ThemeContext';
-import ShoeManagement from './Management/ShoesManagement'
-import BrandsManagement from './Management/BrandsManagement';
-import ImportProductPage from './Management/ImportProductPage';
-import SupplierManagerMent from './Management/SupplierManagement';
-import ClientsManagement from './Management/ClientsManagement';
-import PaymentPage from './PaymentPage';
+import { Context } from './components/UseContext/ThemeContext';
+import ShoeManagement from './layouts/Management/ShoesManagement'
+import BrandsManagement from './layouts/Management/BrandsManagement';
+import ImportProductPage from './layouts/Management/ImportProductPage';
+import SupplierManagerMent from './layouts/Management/SupplierManagement';
+import ClientsManagement from './layouts/Management/ClientsManagement';
+import PaymentPage from './layouts/PaymentPage';
+import SalesManagement from './layouts/Management/SalesManagement';
 
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
   const [suppliers, setSuppliers] = useState([])
   const [listMenu, setListMenu] = useState(null)
   const [clients, setClients] = useState([])
+  const [orderImports, setOrderImports] = useState([])
+  const [orderBuys, setOrderBuys] = useState([])
 
   const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -114,6 +117,23 @@ function App() {
         })
   }, [isload])
 
+  useEffect(() => {
+    let token = 'Bearer ' + localStorage.getItem("token")
+    axios.get('/orders/get-all-order-buy', {headers : {Authorization : token, 'Content-Type': 'application/json'}})
+        .then(res=> {
+            setOrderBuys(res.data)
+        })
+  }, [isload])
+
+  useEffect(() => {
+    let token = 'Bearer ' + localStorage.getItem("token")
+    axios.get('/orders/get-all-order-import', {headers : {Authorization : token, 'Content-Type': 'application/json'}})
+        .then(res=> {
+          setOrderImports(res.data)
+        })
+  }, [isload])
+
+
   return (
     <Router>
       <ScrollToTop />
@@ -130,7 +150,8 @@ function App() {
           <Route path='/account/import-product-management' element={user ? user.admin ? <ImportProductPage products={products} /> : <Navigate to='/' replace/> : <Navigate to='/' replace/>} /> 
           <Route path='/account/suppliers-management' element={user ? user.admin ? <SupplierManagerMent suppliers={suppliers} /> : <Navigate to='/' replace/> : <Navigate to='/' replace/>} /> 
           <Route path='/account/clients-management' element={user ? user.admin ? <ClientsManagement clients={clients} /> : <Navigate to='/' replace/> : <Navigate to='/' replace/>} /> 
-          <Route path='/payment/product-id/:id/:color/:size/:price/:quantity' element={<PaymentPage products={products} />} />
+          <Route path='/account/sales-management' element={user ? user.admin ? <SalesManagement orderImports={orderImports} orderBuys={orderBuys} /> : <Navigate to='/' replace/> : <Navigate to='/' replace/>} /> 
+          <Route path='/payment/product-id/:id/:color/:size/:price/:quantity' element={<PaymentPage products={products} user1={user} />} />
 
           {/* Categories */}
           {listMenu ? listMenu.sneakers.map((item, index) => {
